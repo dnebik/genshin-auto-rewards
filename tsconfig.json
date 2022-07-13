@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "types": ["node", "sqlite3", "minimist"],
+    "esModuleInterop": false,
+    "rootDir": "src",
+    "importHelpers": true,
+    "moduleResolution": "Node",
+    "target": "ESNext"
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts"]
+}
