@@ -1,7 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
-// import nodeResolve from '@rollup/plugin-node-resolve';
-// import commonjs from '@rollup/plugin-commonjs';
-// import json from '@rollup/plugin-json';
+import alias from '@rollup/plugin-alias';
+import * as path from 'path';
 
 export default {
   input: 'src/index.ts',
@@ -9,5 +8,15 @@ export default {
     dir: 'dist',
     format: 'cjs',
   },
-  plugins: [typescript()],
+  plugins: [
+    typescript(),
+    alias({
+      entries: [
+        {
+          find: '@',
+          replacement: path.resolve(__dirname, './src'),
+        },
+      ],
+    }),
+  ],
 };

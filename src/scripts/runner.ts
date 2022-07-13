@@ -3,7 +3,7 @@ import User from './class/User';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CronJob = require('cron').CronJob;
 
-export function run() {
+export function runSchedule() {
   const cron = new CronJob('* 10 * * *', async () => {
     const all = await User.getAll();
     getRewards(all);
