@@ -33,7 +33,7 @@ export default class DB {
       };
 
       DB.connection.run(
-        `CREATE TABLE IF NOT EXISTS users (account_id INTEGER PRIMARY KEY, cookie_token TEXT NOT NULL);`,
+        `CREATE TABLE IF NOT EXISTS users (account_id INTEGER PRIMARY KEY, cookie_token TEXT NOT NULL, tg_chat_id INTEGER NULL);`,
         callback
       );
     });
