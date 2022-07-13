@@ -6,9 +6,13 @@ Automatically getting rewards from [site](https://webstatic-sea.mihoyo.com/ys/ev
 
 Can use multiply accounts.
 
+## Build
+
+run `npm run build`
+
 ## Use
 
-run `node ./dist/index.js` for start schedule.
+run `node ./dist/index.js` to start schedule.
 
 run `node ./dist/index.js add --accaunt_id={number} --cookie_token={string}` to add/edit accaunt.
 
