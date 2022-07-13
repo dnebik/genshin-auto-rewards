@@ -2,7 +2,7 @@
 
 ## Features
 
-Automatically getting rewards [site](https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id=e202102251931481) by using cookies at 10:00am.
+Automatically getting rewards аrom [site](https://webstatic-sea.mihoyo.com/ys/event/signin-sea/index.html?act_id=e202102251931481) by using cookies at 10:00am.
 
 Can use multiply accounts.
 
