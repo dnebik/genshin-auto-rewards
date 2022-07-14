@@ -40,7 +40,11 @@ export function executeAdd(
 
     User.get(account_id)
       .then((value) => {
-        if (tg_chat_id && tg_chat_id === value.tg_chat_id) {
+        if (
+          tg_chat_id &&
+          value?.tg_chat_id &&
+          tg_chat_id === value.tg_chat_id
+        ) {
           reject(constants.ERRORS.ALREADY_EXIST);
         } else {
           return value;
