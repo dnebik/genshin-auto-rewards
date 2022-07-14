@@ -4,7 +4,7 @@ import User from './class/User';
 const CronJob = require('cron').CronJob;
 
 export function runSchedule() {
-  const cron = new CronJob('* */6 * * *', async () => {
+  const cron = new CronJob('0 */5 * * *', async () => {
     const all = await User.getAll();
     getRewards(all);
   });
