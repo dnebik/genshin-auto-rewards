@@ -30,7 +30,7 @@ export function getRewards(
 export function getFullUserInfo(
   account_id: GenshinCookie['account_id'],
   cookie_token: GenshinCookie['cookie_token']
-): Promise<string> {
+) {
   return new Promise((resolve, reject) => {
     axios
       .get(

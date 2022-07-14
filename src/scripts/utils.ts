@@ -24,7 +24,8 @@ export async function executeRm(account_id: any): Promise<string> {
 
 export function executeAdd(
   account_id: any,
-  cookie_token: any
+  cookie_token: any,
+  tg_chat_id?: any
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     if (typeof cookie_token !== 'string' || typeof account_id !== 'number') {
@@ -34,10 +35,20 @@ export function executeAdd(
     const user = new User({
       account_id,
       cookie_token,
+      tg_chat_id,
     });
 
-    user
-      .getFullUserInfo()
+    User.get(account_id)
+      .then((value) => {
+        if (tg_chat_id && tg_chat_id === value.tg_chat_id) {
+          reject(constants.ERRORS.ALREADY_EXIST);
+        } else {
+          return value;
+        }
+      })
+      .then(() => {
+        return user.getFullUserInfo();
+      })
       .then(async () => {
         await user.save();
         await user.getRewards().catch(() => {});
