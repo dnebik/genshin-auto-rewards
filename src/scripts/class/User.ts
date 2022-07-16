@@ -30,6 +30,7 @@ export default class User {
     return await getFullUserInfo(this.account_id, this.cookie_token).catch(
       (data) => {
         if (data.retcode === -100) this.setAccess(false).catch(() => {});
+        throw new Error(data.retcode + ': ' + data.message);
       }
     );
   }
