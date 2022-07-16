@@ -50,10 +50,11 @@ app.post('/list', (req, res) => {
       const result = Object.fromEntries(
         await Promise.all(
           m.map(async (user) => {
-            const { user_info } = await user
+            const info = await user
               .getFullUserInfo()
-              .then(({ data }) => data);
-            return [user.account_id, user_info.nickname];
+              .then(({ data }) => data)
+              .catch(() => {});
+            return [user.account_id, info?.user_info?.nickname || false];
           })
         )
       );

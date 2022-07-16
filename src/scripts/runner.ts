@@ -6,7 +6,7 @@ import { constants } from '@/constants';
 const CronJob = require('cron').CronJob;
 
 export function runSchedule() {
-  const cron = new CronJob('*/1 * * * *', async () => {
+  const cron = new CronJob('0 */2 * * *', async () => {
     console.log('start sending rewards!');
     const all = await User.getAll();
     await getRewards(all);
