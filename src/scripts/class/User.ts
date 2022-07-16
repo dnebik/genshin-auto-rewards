@@ -18,7 +18,12 @@ export default class User {
   }
 
   public async getRewards() {
-    return await getRewards(this.account_id, this.cookie_token);
+    return await getRewards(this.account_id, this.cookie_token).catch(
+      (data) => {
+        if (data.retcode === -100) this.setAccess(false).catch(() => {});
+        throw new Error(data.retcode + ': ' + data.message);
+      }
+    );
   }
 
   public async getFullUserInfo() {
@@ -32,13 +37,13 @@ export default class User {
 
   public async setAccess(value: boolean) {
     return new Promise((resolve, reject) => {
-      const callback = (err) => {
+      const callback = function (err) {
         if (err) reject(err);
         resolve(true);
       };
 
       DB.connection.run(
-        `UPDATE users SET access = ${value ? 1 : 0} WHERE account_id = ${
+        `UPDATE users SET has_access = ${value ? 1 : 0} WHERE account_id = ${
           this.account_id
         };`,
         callback

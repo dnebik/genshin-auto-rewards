@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { GenshinCookie, InitializeMessage } from '@/types/types';
 
 const tgUrl = process.env.TG_BOT_URL;
@@ -21,7 +21,7 @@ export function getRewards(
       .then((response) => {
         const { data } = response;
         if (data.retcode !== 0) {
-          reject(new Error(data.retcode + ': ' + data.message));
+          reject(data);
         } else {
           resolve(data.message);
         }
@@ -52,7 +52,9 @@ export function getFullUserInfo(
           resolve(data);
         }
       })
-      .catch((e) => reject(e));
+      .catch((e: AxiosError) => {
+        reject(e);
+      });
   });
 }
 
@@ -62,7 +64,12 @@ export async function sendMessageInTG(
 ) {
   const url = new URL(tgUrl);
   url.pathname = '/send';
-  return await axios.post(url.toString(), {
-    message,
-  });
+  return await axios
+    .post(url.toString(), {
+      message,
+      chatId,
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }

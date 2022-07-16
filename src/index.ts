@@ -18,6 +18,11 @@ if (!process.env.TG_BOT_URL) {
   }
 
   await commands();
-  runSchedule();
-  runApi();
+
+  try {
+    runSchedule();
+    runApi();
+  } catch (e) {
+    console.error(e);
+  }
 })();
