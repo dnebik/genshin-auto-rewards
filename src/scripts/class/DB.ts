@@ -29,11 +29,19 @@ export default class DB {
     return new Promise((resolve, reject) => {
       const callback = function (err) {
         if (err) reject(err);
-        resolve(DB.connection);
+        else
+          DB.connection.run(
+            'alter table users add column has_access integer default 1',
+            () => resolve(DB.connection)
+          );
       };
-
       DB.connection.run(
-        `CREATE TABLE IF NOT EXISTS users (account_id INTEGER PRIMARY KEY, cookie_token TEXT NOT NULL, tg_chat_id INTEGER NULL);`,
+        `CREATE TABLE IF NOT EXISTS users (
+                account_id INTEGER PRIMARY KEY, 
+                cookie_token TEXT NOT NULL, 
+                tg_chat_id INTEGER NULL,
+                has_access INTEGER DEFAULT 1
+             );`,
         callback
       );
     });
