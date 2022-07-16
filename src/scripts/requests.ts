@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { GenshinCookie, InitializeMessage } from '@/types/types';
+
+const tgUrl = process.env.TG_BOT_URL;
 
 export function getRewards(
   account_id: GenshinCookie['account_id'],
@@ -44,11 +47,22 @@ export function getFullUserInfo(
       .then((response) => {
         const { data } = response;
         if (data.retcode !== 0) {
-          reject(new Error(data.retcode + ': ' + data.message));
+          reject(data);
         } else {
           resolve(data);
         }
       })
       .catch((e) => reject(e));
+  });
+}
+
+export async function sendMessageInTG(
+  chatId,
+  message: InitializeMessage | InitializeMessage[]
+) {
+  const url = new URL(tgUrl);
+  url.pathname = '/send';
+  return await axios.post(url.toString(), {
+    message,
   });
 }

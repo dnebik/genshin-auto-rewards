@@ -1,5 +1,6 @@
 import { getFullUserInfo, getRewards } from '../requests';
 import DB from './DB';
+import { GenshinCookie } from '@/types/types';
 
 interface ConstructorOptions extends GenshinCookie {
   tg_chat_id?: number;
@@ -21,7 +22,27 @@ export default class User {
   }
 
   public async getFullUserInfo() {
-    return await getFullUserInfo(this.account_id, this.cookie_token);
+    return await getFullUserInfo(this.account_id, this.cookie_token).catch(
+      (data) => {
+        if (data.retcode === -100) this.setAccess(false).catch(() => {});
+      }
+    );
+  }
+
+  public async setAccess(value: boolean) {
+    return new Promise((resolve, reject) => {
+      const callback = (err) => {
+        if (err) reject(err);
+        resolve(true);
+      };
+
+      DB.connection.run(
+        `UPDATE users SET access = ${value ? 1 : 0} WHERE account_id = ${
+          this.account_id
+        };`,
+        callback
+      );
+    });
   }
 
   public async save() {
@@ -70,7 +91,7 @@ export default class User {
         resolve([]);
       };
 
-      DB.connection.all(`SELECT * FROM users`, callback);
+      DB.connection.all(`SELECT * FROM users WHERE has_access = 1`, callback);
     });
   }
 
