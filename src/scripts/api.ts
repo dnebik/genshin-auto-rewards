@@ -53,7 +53,7 @@ app.post('/list', (req, res) => {
             const info = await user
               .getFullUserInfo()
               .then(({ data }) => data)
-              .catch(() => {});
+              .catch(() => false);
             return [user.account_id, info?.user_info?.nickname || false];
           })
         )
