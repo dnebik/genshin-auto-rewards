@@ -20,6 +20,9 @@ export default class User {
   public async getRewards() {
     return await getRewards(this.account_id, this.cookie_token).catch(
       (data) => {
+        if (![-100, -5003].includes(data.retcode)) {
+          console.log(data);
+        }
         if (data.retcode === -100) this.setAccess(false).catch(() => {});
         throw new Error(data.retcode + ': ' + data.message);
       }
