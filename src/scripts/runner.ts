@@ -6,13 +6,15 @@ import { constants } from '@/constants';
 const CronJob = require('cron').CronJob;
 
 export function runSchedule() {
-  const cron = new CronJob('0/1 * * * *', async () => {
-    console.log('start sending rewards!');
-    const all = await User.getAll();
-    await getRewards(all);
-    console.log('done!');
-  });
+  const cron = new CronJob('* */2 * * *', executeGettingRewards);
   cron.start();
+}
+
+export async function executeGettingRewards() {
+  console.log('start sending rewards!');
+  const all = await User.getAll();
+  await getRewards(all);
+  console.log('done!');
 }
 
 async function getRewards(list: User[]) {
@@ -33,6 +35,8 @@ async function getRewards(list: User[]) {
     })
     .catch(async (e) => {
       if ((e.message as string).search(/-100/g) > -1) {
+        console.error(user.account_id);
+        console.error(e);
         if (user.tg_chat_id) {
           await sendMessageInTG(user.tg_chat_id, [
             [
