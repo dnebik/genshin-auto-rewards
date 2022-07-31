@@ -58,7 +58,7 @@ export const TAKEN_MESSAGES: InitializeMessage[][] = [
       'text',
       'Там какая то мелочь в календаре, но я взяла ее тебе на всякий случай.',
     ],
-    ['sticker', 'SAD'],
+    ['sticker', 'SADNESS'],
   ],
   [
     ['text', 'Твоя награда собрана, надеюсь не за бесплатно!'],
