@@ -6,7 +6,7 @@ import { constants } from '@/constants';
 const CronJob = require('cron').CronJob;
 
 export function runSchedule() {
-  const cron = new CronJob('* */2 * * *', executeGettingRewards);
+  const cron = new CronJob('0 */2 * * *', executeGettingRewards);
   cron.start();
 }
 
