@@ -34,9 +34,7 @@ async function getRewards(list: User[]) {
       }
     })
     .catch(async (e) => {
-      if ((e.message as string).search(/-100/g) > -1) {
-        console.error(user.account_id);
-        console.error(e);
+      if ((e.message as string).search(/-502/g) > -1) {
         if (user.tg_chat_id) {
           await sendMessageInTG(user.tg_chat_id, [
             [
